@@ -17,11 +17,5 @@ public class JsonObject {
 	public void setValue(JsonValue value) {
 		this.value = value;
 	}
-	
-	public JsonObject()
-	{
-		setKey(new JsonKey());
-		setValue(new JsonValue());
-	}
 
 }
