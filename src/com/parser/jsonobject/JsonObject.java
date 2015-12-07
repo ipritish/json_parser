@@ -1,21 +1,27 @@
 package com.parser.jsonobject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class JsonObject {
 	
-	private JsonKey key;
-	private JsonValue value;
-	
-	public JsonKey getKey() {
-		return key;
+	private Map<String,String> mapString;
+	private Map<String,JsonObject> mapObject;
+	public JsonObject()
+	{
+		setMapString(new HashMap<String,String>());
+		setMapObject(new HashMap<String,JsonObject>());
 	}
-	public void setKey(JsonKey key) {
-		this.key = key;
+	public Map<String,String> getMapString() {
+		return mapString;
 	}
-	public JsonValue getValue() {
-		return value;
+	public void setMapString(Map<String,String> mapString) {
+		this.mapString = mapString;
 	}
-	public void setValue(JsonValue value) {
-		this.value = value;
+	public Map<String,JsonObject> getMapObject() {
+		return mapObject;
 	}
-
+	public void setMapObject(Map<String,JsonObject> mapObject) {
+		this.mapObject = mapObject;
+	}
 }
