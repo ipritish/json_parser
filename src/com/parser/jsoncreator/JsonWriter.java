@@ -11,21 +11,24 @@ public class JsonWriter {
 	
 	public static void JsonWrite(Json json)
 	{
-		sb.append("{\n");
+		sb.append("{");
 		//write all the string first than
 		//iterate through object and separate function object writing
 		//Iterator<String> stringObject = json.getMapString().
 		for (Entry<String, String> entry : json.getMapString().entrySet()) {
-		    sb.append("\t\"" + entry.getKey() + "\""+ "\t:\t\"" + entry.getValue() + "\"\n");
-		    
-		    
+		    sb.append("\"" + entry.getKey() + "\""+ ":\"" + entry.getValue() + "\",");
 		}
 		
 		for (Entry<String, JsonObject> entry : json.getMapObjects().entrySet()) {
 		    //System.out.println("Key : " + entry.getKey() + "Value: ");
-			sb.append("\t\"" + entry.getKey() + "\"" + "\t:\t");
+			sb.append("\"" + entry.getKey() + "\"" + ":");
 		    JsonObjectWrite(entry.getValue());
+		    
 		    		    
+		}
+		if (sb.length() > 0) 
+		{
+			sb.setLength(sb.length() - 1);
 		}
 		sb.append("}");
 		System.out.println(sb.toString());
@@ -34,19 +37,31 @@ public class JsonWriter {
 	
 	public static void JsonObjectWrite(JsonObject jsonObject)
 	{
-		sb.append("{\n");
+		sb.append("{");
 		
 		for (Entry<String, String> entry : jsonObject.getMapString().entrySet()) {
 		    //System.out.println("Key : " + entry.getKey() + "Value: " + entry.getValue());
-			sb.append("\t\"" + entry.getKey() + "\""+ "\t:\t\"" + entry.getValue() + "\"\n");
-		    
+			sb.append("\"" + entry.getKey() + "\""+ ":\"" + entry.getValue() + "\",");
+			
+			
 		}
-		sb.append("}\n");
+		// Readable version
+		if (jsonObject.getMapString().size() > 0) {
+		   sb.setLength(sb.length() - 1);
+		}
+		//sb.append("\n");
 		
 		for (Entry<String, JsonObject> entry : jsonObject.getMapObject().entrySet()) {
+			sb.append(",");
+			sb.append("\"" + entry.getKey() + "\"" + ":");
 			JsonObjectWrite(entry.getValue());
-		    		    
+		    sb.append("");	    
 		}
+		// Readable version
+		if (jsonObject.getMapObject().size() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+		sb.append("},");
 	}
 
 }
