@@ -16,6 +16,7 @@ public class WriteJsonTest {
 		json.getMapArray().get("arraytest").getArrayList().add(new JsonArray());
 		json.getMapArray().get("arraytest").getObjectList().get(0).getMapString().put("test", "test");
 		json.getMapString().put("first", "trial");
+		json.getMapString().put("hello", "world");
 		json.getMapObjects().put("second", new JsonObject());
 		json.getMapObjects().get("second").getMapString().put("insidefirst", "insidesecond");
 		json.getMapObjects().get("second").getMapArray().put("test", new JsonArray());
