@@ -112,9 +112,9 @@ public class JsonWriter {
 		    sb.append("");	    
 		}
 		
-		if (jsonObject.getMapArray().size() > 0) {
-			sb.setLength(sb.length() - 1);
-		}
+		//if (jsonObject.getMapArray().size() > 0) {
+			//sb.setLength(sb.length() - 1);
+		//}
 		
 		for (Entry<String, JsonObject> entry : jsonObject.getMapObject().entrySet()) {
 			sb.append(",");
