@@ -8,6 +8,7 @@ public class JsonArray {
 	private ArrayList<Double> doubleList;
 	private ArrayList<Boolean> boolList;
 	private ArrayList<JsonObject> objectList;
+	private ArrayList<JsonArray> arrayList;
 	
 	public JsonArray()
 	{
@@ -15,6 +16,7 @@ public class JsonArray {
 		doubleList = new ArrayList<>();
 		boolList = new ArrayList<>();
 		objectList = new ArrayList<JsonObject>();
+		arrayList = new ArrayList<JsonArray>();
 	}
 
 	public ArrayList<Long> getLongList() {
@@ -47,6 +49,14 @@ public class JsonArray {
 
 	public void setObjectList(ArrayList<JsonObject> objectList) {
 		this.objectList = objectList;
+	}
+
+	public ArrayList<JsonArray> getArrayList() {
+		return arrayList;
+	}
+
+	public void setArrayList(ArrayList<JsonArray> arrayList) {
+		this.arrayList = arrayList;
 	} 
 
 }

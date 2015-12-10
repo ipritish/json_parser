@@ -3,6 +3,7 @@ package com.parser.jsoncreator;
 import java.util.Map.Entry;
 
 import com.parser.jsonobject.Json;
+import com.parser.jsonobject.JsonArray;
 import com.parser.jsonobject.JsonObject;
 
 public class JsonWriter {
@@ -17,6 +18,13 @@ public class JsonWriter {
 		//Iterator<String> stringObject = json.getMapString().
 		for (Entry<String, String> entry : json.getMapString().entrySet()) {
 		    sb.append("\"" + entry.getKey() + "\""+ ":\"" + entry.getValue() + "\",");
+		}
+		
+		for (Entry<String, JsonArray> entry : json.getMapArray().entrySet()) {
+		    sb.append("\"" + entry.getKey() + "\""+ ":");
+		    JsonArrayWrite(entry.getValue());
+		    sb.append(",");
+		    //entry.getValue() + "\",");
 		}
 		
 		for (Entry<String, JsonObject> entry : json.getMapObjects().entrySet()) {
@@ -35,6 +43,55 @@ public class JsonWriter {
 		
 	}
 	
+	public static void JsonArrayWrite(JsonArray jsonArray) {
+		sb.append("[");
+		//write all primitives
+		//write long
+		for (long value : jsonArray.getLongList())
+		{
+			sb.append(value);
+			sb.append(",");
+		}
+		if(jsonArray.getLongList().size() > 0)
+		{
+			sb.setLength(sb.length() - 1);
+		}
+		//write booleans
+		for (boolean value : jsonArray.getBoolList())
+		{
+			sb.append(value ? "true" : "false");
+			sb.append(",");
+		}
+		if(jsonArray.getBoolList().size() > 0)
+		{
+			sb.setLength(sb.length() - 1);
+		}
+		//write doubles
+		for (double value : jsonArray.getDoubleList())
+		{
+			sb.append(value);
+			sb.append(",");
+		}
+		if(jsonArray.getDoubleList().size() > 0)
+		{
+			sb.setLength(sb.length() - 1);
+		}
+		
+		//write objects
+		for (JsonObject value : jsonArray.getObjectList())
+		{
+			JsonObjectWrite(value);
+			//sb.append(",");
+		}
+		if(jsonArray.getObjectList().size() > 0)
+		{
+			sb.setLength(sb.length() - 1);
+		}
+		
+		sb.append("]");
+		
+	}
+
 	public static void JsonObjectWrite(JsonObject jsonObject)
 	{
 		sb.append("{");
@@ -51,12 +108,25 @@ public class JsonWriter {
 		}
 		//sb.append("\n");
 		
+		for (Entry<String, JsonArray> entry : jsonObject.getMapArray().entrySet()) {
+			sb.append(",");
+			sb.append("\"" + entry.getKey() + "\"" + ":");
+			JsonArrayWrite(entry.getValue());
+		    sb.append("");	    
+		}
+		
+		if (jsonObject.getMapArray().size() > 0) {
+			sb.setLength(sb.length() - 1);
+		}
+		
 		for (Entry<String, JsonObject> entry : jsonObject.getMapObject().entrySet()) {
 			sb.append(",");
 			sb.append("\"" + entry.getKey() + "\"" + ":");
 			JsonObjectWrite(entry.getValue());
 		    sb.append("");	    
 		}
+		
+		
 		// Readable version
 		if (jsonObject.getMapObject().size() > 0) {
 			sb.setLength(sb.length() - 1);
