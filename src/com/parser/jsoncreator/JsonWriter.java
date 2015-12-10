@@ -52,19 +52,11 @@ public class JsonWriter {
 			sb.append(value);
 			sb.append(",");
 		}
-		if(jsonArray.getLongList().size() > 0)
-		{
-			sb.setLength(sb.length() - 1);
-		}
 		//write booleans
 		for (boolean value : jsonArray.getBoolList())
 		{
 			sb.append(value ? "true" : "false");
 			sb.append(",");
-		}
-		if(jsonArray.getBoolList().size() > 0)
-		{
-			sb.setLength(sb.length() - 1);
 		}
 		//write doubles
 		for (double value : jsonArray.getDoubleList())
@@ -72,18 +64,23 @@ public class JsonWriter {
 			sb.append(value);
 			sb.append(",");
 		}
-		if(jsonArray.getDoubleList().size() > 0)
-		{
-			sb.setLength(sb.length() - 1);
-		}
-		
 		//write objects
 		for (JsonObject value : jsonArray.getObjectList())
 		{
 			JsonObjectWrite(value);
 			//sb.append(",");
 		}
-		if(jsonArray.getObjectList().size() > 0)
+		
+		for (JsonArray value : jsonArray.getArrayList())
+		{
+			JsonArrayWrite(value);
+			sb.append(",");
+		}
+		if(jsonArray.getObjectList().size() > 0 ||
+				jsonArray.getBoolList().size() > 0||
+				jsonArray.getArrayList().size() > 0||
+				jsonArray.getDoubleList().size() > 0||
+				jsonArray.getLongList().size() > 0)
 		{
 			sb.setLength(sb.length() - 1);
 		}
