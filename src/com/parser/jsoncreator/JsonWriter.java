@@ -48,6 +48,7 @@ public class JsonWriter {
 		System.out.println(sb.toString());
 		Charset charset = Charset.forName("US-ASCII");
 		Path file = FileSystems.getDefault().getPath("user.json");
+		//Files.readAllLines(file, charset);
 		try (BufferedWriter writer = Files.newBufferedWriter(file , charset)) {
 		    writer.write(sb.toString(), 0, sb.toString().length());
 		} catch (IOException x) {
