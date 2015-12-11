@@ -1,5 +1,12 @@
 package com.parser.jsoncreator;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map.Entry;
 
 import com.parser.jsonobject.Json;
@@ -40,6 +47,13 @@ public class JsonWriter {
 		}
 		sb.append("}");
 		System.out.println(sb.toString());
+		Charset charset = Charset.forName("US-ASCII");
+		Path file = FileSystems.getDefault().getPath("user.json");
+		try (BufferedWriter writer = Files.newBufferedWriter(file , charset)) {
+		    writer.write(sb.toString(), 0, sb.toString().length());
+		} catch (IOException x) {
+		    System.err.format("IOException: %s%n", x);
+		}
 		
 	}
 	
