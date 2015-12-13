@@ -28,10 +28,31 @@ public class JsonReader {
 		{
 			jsonString+=var;
 		}
+		jsonString = stripNewLineAndTab(jsonString);
 		System.out.println(jsonString);
 		Json json = new Json();
 		//do manipulation and create proper variable
 		return json;	
+	}
+
+	private static String stripNewLineAndTab(String jsonString) {
+		return jsonString;
+		
+	}
+	
+	private static void findMapString(Json json, String var)
+	{
+		//
+	}
+	
+	private static void findMapJsonObject(Json json, String var)
+	{
+		//
+	}
+	
+	private static void findMapArray(Json json, String var)
+	{
+		//
 	}
 
 }
