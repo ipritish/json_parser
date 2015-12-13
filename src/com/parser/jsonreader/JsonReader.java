@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.parser.jsonobject.Json;
+import com.parser.jsonobject.JsonArray;
+import com.parser.jsonobject.JsonObject;
 
 public class JsonReader {
 	
@@ -35,22 +37,22 @@ public class JsonReader {
 		return json;	
 	}
 
-	private static String stripNewLineAndTab(String jsonString) {
-		return jsonString;
-		
+	private static String stripNewLineAndTab(String jsonString) 
+	{
+		return jsonString;		
 	}
 	
-	private static void findMapString(Json json, String var)
+	private static void addMapString(Json json, String key, String Value)
 	{
 		//
 	}
 	
-	private static void findMapJsonObject(Json json, String var)
+	private static void addMapJsonObject(Json json, String key, JsonObject jObject)
 	{
 		//
 	}
 	
-	private static void findMapArray(Json json, String var)
+	private static void addMapArray(Json json, String key, JsonArray jArray)
 	{
 		//
 	}
