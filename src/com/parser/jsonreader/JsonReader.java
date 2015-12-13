@@ -42,19 +42,34 @@ public class JsonReader {
 		return jsonString;		
 	}
 	
+	//these will iterate to outer loop
 	private static void addMapString(Json json, String key, String Value)
 	{
 		//
 	}
 	
-	private static void addMapJsonObject(Json json, String key, JsonObject jObject)
+	private static void addMapJsonObject(Json json, String key, String vObject)
 	{
-		//
+		//parse string and assign to object here
+		JsonObject jObject = new JsonObject();
+		json.getMapObjects().put(key, jObject);
 	}
 	
-	private static void addMapArray(Json json, String key, JsonArray jArray)
+	private static void addMapArray(Json json, String key, String vArray)
 	{
-		//
+		//parse string and assign to objct here
+		JsonArray jArray = new JsonArray();
+		json.getMapArray().put(key, jArray);
+	}
+	
+	private static void addArrayToObject(JsonObject jObject, JsonArray jArray, String key)
+	{
+		jObject.getMapArray().put(key, jArray);
+	}
+	
+	private static void addObjectToArray(JsonArray jArray, JsonObject jObject)
+	{
+		jArray.getObjectList().add(jObject);
 	}
 
 }
