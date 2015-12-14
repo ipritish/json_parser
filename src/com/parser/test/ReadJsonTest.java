@@ -7,7 +7,7 @@ public class ReadJsonTest {
 	
 	public static void main(String[] args)
 	{
-		Json json = JsonReader.parse("user.json");
+		Json json = JsonReader.parse("input.json");
 		//System.out.println(json.toString());
 	}
 

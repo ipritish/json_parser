@@ -32,7 +32,9 @@ public class JsonReader {
 		}
 		jsonString = stripNewLineAndTab(jsonString);
 		System.out.println(jsonString);
+		jsonString = jsonString.replaceAll("[\\s]", "");
 		Json json = new Json();
+		System.out.println(jsonString);
 		//do manipulation and create proper variable
 		return json;	
 	}
