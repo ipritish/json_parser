@@ -36,6 +36,11 @@ public class JsonReader {
 		Json json = new Json();
 		System.out.println(jsonString);
 		//do manipulation and create proper variable
+		String[] splitValues = jsonString.split(":");
+		for(String val : splitValues)
+		{
+			System.out.println(val);
+		}
 		return json;	
 	}
 
