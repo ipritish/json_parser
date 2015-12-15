@@ -33,24 +33,35 @@ public class JsonReader {
 		{
 			jsonString+=var;
 		}
-		jsonString = stripNewLineAndTab(jsonString);
 		System.out.println(jsonString);
 		jsonString = stripNewLineAndTab(jsonString);
+		System.out.println(jsonString);
 		
 		Json json = new Json();
-		System.out.println(jsonString);
 		//do manipulation and create proper variable
 		//String[] splitValues = jsonString.split(":");
-		for(char val : jsonString.toCharArray())
+		String totalValue = "";
+		String exampleString = jsonString.substring(jsonString.indexOf('{', 1));
+		System.out.println(exampleString);
+		for (char val : exampleString.toCharArray())
 		{
 			if(val == '{')
 			{
 				openBraces++;
 				//System.out.println(val + "\t fount it");
 			}
+			if(val == '}')
+			{
+				closedBraces++;
+				//System.out.println(val + "\t fount it");
+			}
+			totalValue += val;
+			if(openBraces == closedBraces)
+				break;
 			
 		}
 		System.out.println("object found" + "\t" +(openBraces - 1));
+		System.out.println(totalValue);
 		return json;	
 	}
 
