@@ -14,6 +14,9 @@ import com.parser.jsonobject.JsonObject;
 
 public class JsonReader {
 	
+	private static int openBraces = 0;
+	private static int closedBraces = 0;
+	
 	public static Json parse(String filePath)
 	{
 		//jsonString
@@ -32,21 +35,28 @@ public class JsonReader {
 		}
 		jsonString = stripNewLineAndTab(jsonString);
 		System.out.println(jsonString);
-		jsonString = jsonString.replaceAll("[\\s]", "");
+		jsonString = stripNewLineAndTab(jsonString);
+		
 		Json json = new Json();
 		System.out.println(jsonString);
 		//do manipulation and create proper variable
-		String[] splitValues = jsonString.split(":");
-		for(String val : splitValues)
+		//String[] splitValues = jsonString.split(":");
+		for(char val : jsonString.toCharArray())
 		{
-			System.out.println(val);
+			if(val == '{')
+			{
+				openBraces++;
+				//System.out.println(val + "\t fount it");
+			}
+			
 		}
+		System.out.println("object found" + "\t" +(openBraces - 1));
 		return json;	
 	}
 
 	private static String stripNewLineAndTab(String jsonString) 
 	{
-		return jsonString;		
+		return jsonString.replaceAll("[\\s]", "");		
 	}
 	
 	//these will iterate to outer loop

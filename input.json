@@ -14,6 +14,7 @@
 		"insidesecond": "insidesecond",
 		"insideinsidefirst": {
 			"test": "test"
-		}
+		},
+		"example" : "easy"
 	}
 }
