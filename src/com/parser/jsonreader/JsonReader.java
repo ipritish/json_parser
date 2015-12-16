@@ -37,7 +37,7 @@ public class JsonReader {
 		//System.out.println(jsonString);
 		jsonString = stripNewLineAndTab(jsonString);
 		//System.out.println(jsonString);
-		jsonString = jsonString.substring(1,jsonString.length() - 2);
+		jsonString = jsonString.substring(1,jsonString.length() - 1);
 		System.out.println(jsonString);
 		Json json = new Json();
 		//do manipulation and create proper variable

@@ -16,5 +16,6 @@
 			"test2": "test2"
 		},
 		"example" : "easy"
-	}
+	},
+	"keypar" : "parse"
 }
