@@ -2,18 +2,18 @@
 	"hello": "world",
 	"first": "trial",
 	"arraytest": [1, {
-			"test1": "test"
+			"test1": "testval"
 		},
 		[]
 	],
 	"second": {
-		"insidefirst": "insidesecond",
-		"test": [true]
+		"insidefirst": "insidesecondval",
+		"testsecond": [true]
 	},
 	"third": {
-		"insidesecond": "insidesecond",
-		"insideinsidefirst": {
-			"test": "test"
+		"insidesecond2": "insidesecond2val",
+		"insideinsidefirst1": {
+			"test2": "test2"
 		},
 		"example" : "easy"
 	}
