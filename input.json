@@ -2,7 +2,7 @@
 	"hello": "world",
 	"first": "trial",
 	"arraytest": [1, {
-			"test": "test"
+			"test1": "test"
 		},
 		[]
 	],

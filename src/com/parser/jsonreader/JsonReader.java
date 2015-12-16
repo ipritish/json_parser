@@ -16,6 +16,7 @@ public class JsonReader {
 	
 	private static int openBraces = 0;
 	private static int closedBraces = 0;
+	private static ArrayList<String> keys = new ArrayList<String>();
 	
 	public static Json parse(String filePath)
 	{
@@ -33,16 +34,42 @@ public class JsonReader {
 		{
 			jsonString+=var;
 		}
-		System.out.println(jsonString);
+		//System.out.println(jsonString);
 		jsonString = stripNewLineAndTab(jsonString);
+		//System.out.println(jsonString);
+		jsonString = jsonString.substring(1,jsonString.length() - 2);
 		System.out.println(jsonString);
-		
 		Json json = new Json();
 		//do manipulation and create proper variable
-		//String[] splitValues = jsonString.split(":");
+		String[] splitValues = jsonString.split(":");
+		for (String var : splitValues)
+		{
+			//System.out.println(var);
+			
+			String[] getKeys = var.split(",");
+			String key = getKeys[getKeys.length - 1];
+			//System.out.println(key);
+			//String revVar = new StringBuilder(var).reverse().toString();
+			key = key.replaceAll("\"", "")
+					.replaceAll("\\{", "").replaceAll("\\}","").replaceAll("\\[", "")
+					.replaceAll("\\]", "");
+			
+			//add only outside key check for that
+			String subString = jsonString.substring(0, jsonString.indexOf(key));
+			System.out.println(subString);
+			// count number of open braces it should be diff of 1 for it to be outside
+			keys.add(key);
+			
+			
+		}
+		keys.remove(keys.size() - 1);
+		for (String val : keys)
+		{
+			System.out.println(val);
+		}
 		String totalValue = "";
 		String exampleString = jsonString.substring(jsonString.indexOf('{', 1));
-		System.out.println(exampleString);
+		//System.out.println(exampleString);
 		for (char val : exampleString.toCharArray())
 		{
 			if(val == '{')
@@ -60,8 +87,8 @@ public class JsonReader {
 				break;
 			
 		}
-		System.out.println("object found" + "\t" +(openBraces - 1));
-		System.out.println(totalValue);
+		//System.out.println("object found" + "\t" +(openBraces - 1));
+		//System.out.println(totalValue);
 		return json;	
 	}
 
