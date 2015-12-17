@@ -88,7 +88,7 @@ public class JsonReader {
 			
 		}
 		//System.out.println("object found" + "\t" +(openBraces - 1));
-		//System.out.println(totalValue);
+		System.out.println(totalValue);
 		return json;	
 	}
 
