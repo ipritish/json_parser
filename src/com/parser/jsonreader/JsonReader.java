@@ -14,8 +14,6 @@ import com.parser.jsonobject.JsonObject;
 
 public class JsonReader {
 	
-	private static int openBraces = 0;
-	private static int closedBraces = 0;
 	private static ArrayList<String> keys = new ArrayList<String>();
 	
 	public static Json parse(String filePath)
@@ -37,8 +35,6 @@ public class JsonReader {
 		//System.out.println(jsonString);
 		jsonString = stripNewLineAndTab(jsonString);
 		//System.out.println(jsonString);
-		jsonString = jsonString.substring(1,jsonString.length() - 1);
-		System.out.println(jsonString);
 		Json json = new Json();
 		//do manipulation and create proper variable
 		String[] splitValues = jsonString.split(":");
@@ -54,41 +50,36 @@ public class JsonReader {
 					.replaceAll("\\{", "").replaceAll("\\}","").replaceAll("\\[", "")
 					.replaceAll("\\]", "");
 			
-			//add only outside key check for that
-			String subString = jsonString.substring(0, jsonString.indexOf(key));
-			System.out.println(subString);
 			// count number of open braces it should be diff of 1 for it to be outside
 			keys.add(key);
 			
 			
 		}
 		keys.remove(keys.size() - 1);
-		for (String val : keys)
-		{
-			System.out.println(val);
-		}
-		String totalValue = "";
-		String exampleString = jsonString.substring(jsonString.indexOf('{', 1));
 		//System.out.println(exampleString);
-		for (char val : exampleString.toCharArray())
-		{
-			if(val == '{')
+		char[] val = jsonString.toCharArray();
+		for (int i=0 ; i<val.length ; i++)
+		{	
+			switch(val[i])
 			{
-				openBraces++;
-				//System.out.println(val + "\t fount it");
+				case '{':
+					String restObject = jsonString.substring(i);
+					System.out.println(restObject);
+					break;
+				case '"':
+					break;
+				case '}':
+					break;
+				case '[':
+					break;
+				case ']':
+					break;
+				case ':':
+					break;
+				
 			}
-			if(val == '}')
-			{
-				closedBraces++;
-				//System.out.println(val + "\t fount it");
-			}
-			totalValue += val;
-			if(openBraces == closedBraces)
-				break;
 			
 		}
-		//System.out.println("object found" + "\t" +(openBraces - 1));
-		System.out.println(totalValue);
 		return json;	
 	}
 
