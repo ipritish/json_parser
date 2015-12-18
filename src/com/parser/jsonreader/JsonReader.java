@@ -56,21 +56,28 @@ public class JsonReader {
 			
 		}
 		keys.remove(keys.size() - 1);
+		//TODO remove first and  last string here as well
 		//System.out.println(exampleString);
 		char[] val = jsonString.toCharArray();
-		for (int i=0 ; i<val.length ; i++)
+		for (int i=0 ; i<val.length;)
 		{	
 			switch(val[i])
 			{
 				case '{':
 					String restObject = jsonString.substring(i);
+					String key = "";
 					System.out.println(restObject);
+					addMapJsonObject(json,key,restObject);
 					break;
 				case '"':
 					break;
 				case '}':
 					break;
 				case '[':
+					String arrObject = jsonString.substring(i);
+					String arrkey = "";
+					System.out.println(arrObject);
+					addMapArray(json,arrkey,arrObject);
 					break;
 				case ']':
 					break;
@@ -78,7 +85,7 @@ public class JsonReader {
 					break;
 				
 			}
-			
+			i++;
 		}
 		return json;	
 	}
