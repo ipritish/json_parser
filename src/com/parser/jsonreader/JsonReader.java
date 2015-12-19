@@ -57,6 +57,7 @@ public class JsonReader {
 		}
 		keys.remove(keys.size() - 1);
 		//TODO remove first and  last string here as well
+		jsonString = jsonString.substring(1, jsonString.lastIndexOf('}'));
 		//System.out.println(exampleString);
 		char[] val = jsonString.toCharArray();
 		for (int i=0 ; i<val.length;)
@@ -101,18 +102,22 @@ public class JsonReader {
 		//
 	}
 	
-	private static void addMapJsonObject(Json json, String key, String vObject)
+	private static String addMapJsonObject(Json json, String key, String vObject)
 	{
 		//parse string and assign to object here
+		String restObject = "";
 		JsonObject jObject = new JsonObject();
 		json.getMapObjects().put(key, jObject);
+		return restObject;
 	}
 	
-	private static void addMapArray(Json json, String key, String vArray)
+	private static String addMapArray(Json json, String key, String vArray)
 	{
-		//parse string and assign to objct here
+		//parse string and assign to object here
+		String restObject = "";
 		JsonArray jArray = new JsonArray();
 		json.getMapArray().put(key, jArray);
+		return restObject;
 	}
 	
 	private static void addArrayToObject(JsonObject jObject, JsonArray jArray, String key)
