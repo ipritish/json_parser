@@ -68,7 +68,8 @@ public class JsonReader {
 					String restObject = jsonString.substring(i);
 					String key = "";
 					System.out.println(restObject);
-					addMapJsonObject(json,key,restObject);
+					String tempRemain = addMapJsonObject(json,key,restObject);
+					i = jsonString.length() - tempRemain.length();
 					break;
 				case '"':
 					break;
@@ -78,7 +79,8 @@ public class JsonReader {
 					String arrObject = jsonString.substring(i);
 					String arrkey = "";
 					System.out.println(arrObject);
-					addMapArray(json,arrkey,arrObject);
+					String temparrRemain = addMapArray(json,arrkey,arrObject);
+					i = jsonString.length() - temparrRemain.length();
 					break;
 				case ']':
 					break;
