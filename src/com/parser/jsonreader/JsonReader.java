@@ -56,9 +56,9 @@ public class JsonReader {
 			
 		}
 		keys.remove(keys.size() - 1);
-		//TODO remove first and  last string here as well
+		//remove first and  last string here as well
 		jsonString = jsonString.substring(1, jsonString.lastIndexOf('}'));
-		//System.out.println(exampleString);
+		//System.out.println(jsonString);
 		char[] val = jsonString.toCharArray();
 		for (int i=0 ; i<val.length;)
 		{	
@@ -66,10 +66,14 @@ public class JsonReader {
 			{
 				case '{':
 					String restObject = jsonString.substring(i);
-					String key = "";
+					String key = jsonString.substring(0,jsonString.indexOf(restObject));
+					//System.out.println(restObject);
+					key = key.substring(key.lastIndexOf(',')+1);
+					key = key.replaceAll("[//:]", "").replace("\"","").trim();
+					System.out.println(key);
 					System.out.println(restObject);
 					String tempRemain = addMapJsonObject(json,key,restObject);
-					i = jsonString.length() - tempRemain.length();
+					//i = jsonString.length() - tempRemain.length();
 					break;
 				case '"':
 					break;
@@ -77,10 +81,13 @@ public class JsonReader {
 					break;
 				case '[':
 					String arrObject = jsonString.substring(i);
-					String arrkey = "";
+					String arrkey = jsonString.substring(0,jsonString.indexOf(arrObject));
+					arrkey = arrkey.substring(arrkey.lastIndexOf(',')+1).trim();
+					arrkey = arrkey.replaceAll("[//:]", "").replace("\"","").trim();
+					System.out.println(arrkey);
 					System.out.println(arrObject);
 					String temparrRemain = addMapArray(json,arrkey,arrObject);
-					i = jsonString.length() - temparrRemain.length();
+					//i = jsonString.length() - temparrRemain.length();
 					break;
 				case ']':
 					break;
