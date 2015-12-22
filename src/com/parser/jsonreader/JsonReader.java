@@ -73,7 +73,8 @@ public class JsonReader {
 					System.out.println(key);
 					System.out.println(restObject);
 					String tempRemain = addMapJsonObject(json,key,restObject);
-					//i = jsonString.length() - tempRemain.length();
+					//System.out.println(tempRemain);
+					i = jsonString.length() - tempRemain.length();
 					break;
 				case '"':
 					break;
@@ -87,7 +88,7 @@ public class JsonReader {
 					System.out.println(arrkey);
 					System.out.println(arrObject);
 					String temparrRemain = addMapArray(json,arrkey,arrObject);
-					//i = jsonString.length() - temparrRemain.length();
+					i = jsonString.length() - temparrRemain.length();
 					break;
 				case ']':
 					break;
@@ -96,6 +97,7 @@ public class JsonReader {
 				
 			}
 			i++;
+				
 		}
 		return json;	
 	}
@@ -114,7 +116,23 @@ public class JsonReader {
 	private static String addMapJsonObject(Json json, String key, String vObject)
 	{
 		//parse string and assign to object here
-		String restObject = "";
+		
+		int beginIndex = 0;
+		int endIndex = 0;
+		//System.out.println(vArray);
+		String objectTobeAdded = "";
+		for (char val : vObject.toCharArray())
+		{
+			if(val == '{')
+				beginIndex++;
+			if(val == '}')
+				endIndex++;
+			objectTobeAdded += val;
+			if(beginIndex == endIndex)
+				break;
+		}
+		System.out.println(objectTobeAdded);
+		String restObject = vObject.substring(objectTobeAdded.length());
 		JsonObject jObject = new JsonObject();
 		json.getMapObjects().put(key, jObject);
 		return restObject;
@@ -123,7 +141,25 @@ public class JsonReader {
 	private static String addMapArray(Json json, String key, String vArray)
 	{
 		//parse string and assign to object here
-		String restObject = "";
+		int beginIndex = 0;
+		int endIndex = 0;
+		//System.out.println(vArray);
+		String arrayTobeAdded = "";
+		for (char val : vArray.toCharArray())
+		{
+		
+		
+				if(val == '[')
+					beginIndex++;
+				if(val == ']')
+					endIndex++;
+				arrayTobeAdded += val;
+				
+				if(beginIndex == endIndex)
+					break;
+		}
+		System.out.println(arrayTobeAdded);
+		String restObject = vArray.substring(arrayTobeAdded.length());
 		JsonArray jArray = new JsonArray();
 		json.getMapArray().put(key, jArray);
 		return restObject;
