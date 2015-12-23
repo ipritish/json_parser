@@ -77,6 +77,12 @@ public class JsonReader {
 					i = jsonString.length() - tempRemain.length();
 					break;
 				case '"':
+					String restString = jsonString.substring(i);
+					System.out.println(restString);
+					if(stringObject(restString))
+					{
+						
+					}
 					break;
 				case '}':
 					break;
@@ -100,6 +106,11 @@ public class JsonReader {
 				
 		}
 		return json;	
+	}
+
+	private static boolean stringObject(String restString) 
+	{
+		return (restString.substring(restString.indexOf(':', 1) + 1).charAt(0) == '"');
 	}
 
 	private static String stripNewLineAndTab(String jsonString) 
@@ -165,6 +176,7 @@ public class JsonReader {
 		return restObject;
 	}
 	
+	//these will be inner iterators
 	private static void addArrayToObject(JsonObject jObject, JsonArray jArray, String key)
 	{
 		jObject.getMapArray().put(key, jArray);
