@@ -25,7 +25,7 @@ public class WriteJsonTest {
 		json.getMapObjects().get("third").getMapString().put("insidesecond", "insidesecond");
 		json.getMapObjects().get("third").getMapObject().put("insideinsidefirst", new JsonObject());
 		json.getMapObjects().get("third").getMapObject().get("insideinsidefirst").getMapString().put("test","test");
-		JsonWriter.JsonWrite(json);
+		JsonWriter.JsonWrite(json,"user.json");
 		
 	}
 

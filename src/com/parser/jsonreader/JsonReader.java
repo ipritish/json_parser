@@ -145,9 +145,9 @@ public class JsonReader {
 	}
 	
 	//these will iterate to outer loop
-	private static void addMapString(Json json, String key, String Value)
+	private static void addMapString(Json json, String key, String value)
 	{
-		//
+		json.getMapString().put(key, value);
 	}
 	
 	private static String addMapJsonObject(Json json, String key, String vObject)

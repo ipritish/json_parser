@@ -16,7 +16,7 @@ public class JsonWriter {
 		
 	private static StringBuilder sb = new StringBuilder();
 	
-	public static void JsonWrite(Json json)
+	public static void JsonWrite(Json json, String fileName)
 	{
 		sb.append("{");
 		//write all the string first than
@@ -47,7 +47,7 @@ public class JsonWriter {
 		sb.append("}");
 		System.out.println(sb.toString());
 		Charset charset = Charset.forName("US-ASCII");
-		Path file = FileSystems.getDefault().getPath("user.json");
+		Path file = FileSystems.getDefault().getPath(fileName);
 		//Files.readAllLines(file, charset);
 		try (BufferedWriter writer = Files.newBufferedWriter(file , charset)) {
 		    writer.write(sb.toString(), 0, sb.toString().length());
