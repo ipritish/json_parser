@@ -212,5 +212,11 @@ public class JsonReader {
 	{
 		jArray.getObjectList().add(jObject);
 	}
+	
+	private static void addStringToObject(JsonObject jObject, String key, String value)
+	{
+		
+	}
+	
 
 }
