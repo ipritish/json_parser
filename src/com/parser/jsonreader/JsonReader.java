@@ -58,8 +58,9 @@ public class JsonReader {
 		keys.remove(keys.size() - 1);
 		//remove first and  last string here as well
 		jsonString = jsonString.substring(1,jsonString.lastIndexOf('}'));
-		//System.out.println(jsonString);
+		System.out.println(jsonString);
 		char[] val = jsonString.toCharArray();
+		System.out.println(val.length);
 		for (int i=0 ; i<val.length;)
 		{	
 			switch(val[i])
@@ -116,6 +117,7 @@ public class JsonReader {
 					break;
 				
 			}
+			System.out.println(i);
 			i++;
 				
 		}
@@ -134,6 +136,11 @@ public class JsonReader {
 	
 	//these will iterate to outer loop
 	private static void addMapString(Json json, String key, String value)
+	{
+		json.getMapString().put(key, value);
+	}
+	
+	private static void addMapStringToObject(JsonObject json, String key, String value)
 	{
 		json.getMapString().put(key, value);
 	}
@@ -160,10 +167,125 @@ public class JsonReader {
 		String restObject = vObject.substring(objectTobeAdded.length());
 		JsonObject jObject = new JsonObject();
 		json.getMapObjects().put(key, jObject);
+		objectTobeAdded = objectTobeAdded.substring(1,objectTobeAdded.lastIndexOf('}'));
+		char val[] = objectTobeAdded.toCharArray();
+		for (int i=0 ; i<val.length;)
+		{	
+			switch(val[i])
+			{
+				case '{':
+					String reObject = objectTobeAdded.substring(i);
+					String innerkey = objectTobeAdded.substring(0,objectTobeAdded.indexOf(reObject));
+					//System.out.println(restObject);
+					innerkey = innerkey.substring(key.lastIndexOf(',')+1);
+					innerkey = innerkey.replaceAll("[//:]", "").replace("\"","").trim();
+					String tempRemain = addMapJsonObjectIterator(jObject,key,reObject);
+					i = objectTobeAdded.length() - tempRemain.length();
+					break;
+				case '"':
+					String restString = objectTobeAdded.substring(i);
+					if(stringObject(restString))
+					{
+						if (restString.contains(","))
+						{
+							String mapString = restString.substring(0,restString.indexOf(','));
+							String[] tempArray = mapString.split(":");
+							String keyString = tempArray[0];
+							keyString = keyString.replaceAll("[//:]", "").replace("\"","").trim();
+							String valString = tempArray[1];
+							valString = valString.replaceAll("[//:]", "").replace("\"","").trim();
+							addMapStringToObject(jObject, keyString, valString);
+							i = i + mapString.length();
+						}
+						else if(restString.contains(":"))
+						{
+							String[] tempArray = restString.split(":");
+							String keyString = tempArray[0];
+							keyString = keyString.replaceAll("[//:]", "").replace("\"","").trim();
+							String valString = tempArray[1];
+							valString = valString.replaceAll("[//:]", "").replace("\"","").trim();
+							addMapStringToObject(jObject, keyString, valString);
+							i = i + restString.length();
+						}
+					}
+					break;
+				case '}':
+					break;
+				case '[':
+					String arrObject = objectTobeAdded.substring(i);
+					String arrkey = objectTobeAdded.substring(0,objectTobeAdded.indexOf(arrObject));
+					arrkey = arrkey.substring(arrkey.lastIndexOf(',')+1).trim();
+					arrkey = arrkey.replaceAll("[//:]", "").replace("\"","").trim();
+					String temparrRemain = addMapArrayToObject(jObject,arrkey,arrObject);
+					i = objectTobeAdded.length() - temparrRemain.length();
+					break;
+				case ']':
+					break;
+				case ':':
+					break;
+				
+			}
+			System.out.println(i);
+			i++;
+				
+		}
+		
 		return restObject;
 	}
 	
+	private static String addMapJsonObjectIterator(JsonObject jObject,
+			String key, String reObject) {
+		int beginIndex = 0;
+		int endIndex = 0;
+		//System.out.println(vArray);
+		String objectTobeAdded = "";
+		for (char val : reObject.toCharArray())
+		{
+			if(val == '{')
+				beginIndex++;
+			if(val == '}')
+				endIndex++;
+			objectTobeAdded += val;
+			if(beginIndex == endIndex)
+				break;
+		}
+		System.out.println(objectTobeAdded);
+		String restObject = reObject.substring(objectTobeAdded.length());
+		JsonObject jinnerObject = new JsonObject();
+		jObject.getMapObject().put(key, jinnerObject);
+		objectTobeAdded = objectTobeAdded.substring(1,objectTobeAdded.lastIndexOf('}'));
+		char val[] = objectTobeAdded.toCharArray();
+		return restObject;
+	}
+
 	private static String addMapArray(Json json, String key, String vArray)
+	{
+		//parse string and assign to object here
+		int beginIndex = 0;
+		int endIndex = 0;
+		//System.out.println(vArray);
+		String arrayTobeAdded = "";
+		for (char val : vArray.toCharArray())
+		{
+		
+		
+				if(val == '[')
+					beginIndex++;
+				if(val == ']')
+					endIndex++;
+				arrayTobeAdded += val;
+				
+				if(beginIndex == endIndex)
+					break;
+		}
+		System.out.println(arrayTobeAdded);
+		String restObject = vArray.substring(arrayTobeAdded.length());
+		JsonArray jArray = new JsonArray();
+		json.getMapArray().put(key, jArray);
+		return restObject;
+	}
+	
+	private static String addMapArrayToObject(JsonObject json, String key, String vArray)
 	{
 		//parse string and assign to object here
 		int beginIndex = 0;
