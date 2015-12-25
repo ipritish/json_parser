@@ -70,15 +70,11 @@ public class JsonReader {
 					//System.out.println(restObject);
 					key = key.substring(key.lastIndexOf(',')+1);
 					key = key.replaceAll("[//:]", "").replace("\"","").trim();
-					System.out.println(key);
-					System.out.println(restObject);
 					String tempRemain = addMapJsonObject(json,key,restObject);
-					//System.out.println(tempRemain);
 					i = jsonString.length() - tempRemain.length();
 					break;
 				case '"':
 					String restString = jsonString.substring(i);
-					System.out.println(restString);
 					if(stringObject(restString))
 					{
 						if (restString.contains(","))
@@ -89,9 +85,6 @@ public class JsonReader {
 							keyString = keyString.replaceAll("[//:]", "").replace("\"","").trim();
 							String valString = tempArray[1];
 							valString = valString.replaceAll("[//:]", "").replace("\"","").trim();
-							System.out.println(mapString);
-							System.out.println(keyString);
-							System.out.println(valString);
 							addMapString(json, keyString, valString);
 							i = i + mapString.length();
 						}
@@ -102,9 +95,6 @@ public class JsonReader {
 							keyString = keyString.replaceAll("[//:]", "").replace("\"","").trim();
 							String valString = tempArray[1];
 							valString = valString.replaceAll("[//:]", "").replace("\"","").trim();
-							System.out.println(restString);
-							System.out.println(keyString);
-							System.out.println(valString);
 							addMapString(json, keyString, valString);
 							i = i + restString.length();
 						}
@@ -117,8 +107,6 @@ public class JsonReader {
 					String arrkey = jsonString.substring(0,jsonString.indexOf(arrObject));
 					arrkey = arrkey.substring(arrkey.lastIndexOf(',')+1).trim();
 					arrkey = arrkey.replaceAll("[//:]", "").replace("\"","").trim();
-					System.out.println(arrkey);
-					System.out.println(arrObject);
 					String temparrRemain = addMapArray(json,arrkey,arrObject);
 					i = jsonString.length() - temparrRemain.length();
 					break;
