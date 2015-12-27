@@ -17,5 +17,6 @@
 		},
 		"example" : "easy"
 	},
-	"keypar" : "parse"
+	"keypar" : "parse",
+	"hello" : "hello"
 }
