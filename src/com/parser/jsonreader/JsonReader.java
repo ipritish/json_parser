@@ -307,8 +307,7 @@ public class JsonReader {
 		String arrayTobeAdded = "";
 		for (char val : vArray.toCharArray())
 		{
-		
-		
+			
 				if(val == '[')
 					beginIndex++;
 				if(val == ']')
@@ -322,9 +321,73 @@ public class JsonReader {
 		String restObject = vArray.substring(arrayTobeAdded.length());
 		JsonArray jArray = new JsonArray();
 		json.getMapArray().put(key, jArray);
+		arrayTobeAdded = arrayTobeAdded.substring(1,arrayTobeAdded.lastIndexOf(']'));
+		System.out.println(arrayTobeAdded);
+		char[] arrIterator = arrayTobeAdded.toCharArray();
+		//remove only array and object from string
+		for (int i=0 ; i<arrIterator.length;)
+		{
+			switch(arrIterator[i])
+			{
+			case '{':
+				String objectLiteral = getObjectIntheArray(arrayTobeAdded.substring(i));
+				i = i + objectLiteral.length();
+				System.out.println(objectLiteral);
+				break;
+			case '[':
+				String arrayLiteral = getArrayIntheArray(arrayTobeAdded.substring(i));
+				i = i +  arrayLiteral.length();
+				System.out.println(arrayLiteral);
+				break;
+			default:
+				break;
+				
+			}
+			i++;
+		}
 		return restObject;
 	}
 	
+	private static String getObjectIntheArray(String substring) 
+	{
+		int startIndex = 0;
+		int endIndex = 0;
+		String objectToReturn = "";
+		for (char temp : substring.toCharArray())
+		{
+			if(temp == '{')
+				startIndex++;
+			if(temp == '}')
+				endIndex++;
+			objectToReturn += temp;
+			
+			if(startIndex == endIndex)
+				break;
+			
+		}
+		return objectToReturn;
+	}
+	
+	private static String getArrayIntheArray(String substring) 
+	{
+		int startIndex = 0;
+		int endIndex = 0;
+		String arrayToReturn = "";
+		for (char temp : substring.toCharArray())
+		{
+			if(temp == '[')
+				startIndex++;
+			if(temp == ']')
+				endIndex++;
+			arrayToReturn += temp;
+			
+			if(startIndex == endIndex)
+				break;
+			
+		}
+		return arrayToReturn;
+	}
+
 	private static String addMapArrayToObject(JsonObject json, String key, String vArray)
 	{
 		//parse string and assign to object here
