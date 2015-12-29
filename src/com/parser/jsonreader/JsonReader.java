@@ -332,12 +332,14 @@ public class JsonReader {
 			case '{':
 				String objectLiteral = getObjectIntheArray(arrayTobeAdded.substring(i));
 				i = i + objectLiteral.length();
+				addObjectToArray(jArray,new JsonObject(), objectLiteral);
 				System.out.println(objectLiteral);
 				break;
 			case '[':
 				String arrayLiteral = getArrayIntheArray(arrayTobeAdded.substring(i));
 				i = i +  arrayLiteral.length();
 				System.out.println(arrayLiteral);
+				jArray.getArrayList().add(new JsonArray()); //do manipulation later
 				break;
 			default:
 				break;
@@ -421,7 +423,7 @@ public class JsonReader {
 		jObject.getMapArray().put(key, jArray);
 	}
 	
-	private static void addObjectToArray(JsonArray jArray, JsonObject jObject)
+	private static void addObjectToArray(JsonArray jArray, JsonObject jObject, String objectLiteral)
 	{
 		jArray.getObjectList().add(jObject);
 	}
