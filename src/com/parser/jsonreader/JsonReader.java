@@ -303,6 +303,8 @@ public class JsonReader {
 		//parse string and assign to object here
 		int beginIndex = 0;
 		int endIndex = 0;
+		ArrayList<String> arrayList = new ArrayList<String>();
+		ArrayList<String> objectList = new ArrayList<String>();
 		//System.out.println(vArray);
 		String arrayTobeAdded = "";
 		for (char val : vArray.toCharArray())
@@ -334,18 +336,57 @@ public class JsonReader {
 				i = i + objectLiteral.length();
 				addObjectToArray(jArray,new JsonObject(), objectLiteral);
 				System.out.println(objectLiteral);
+				objectList.add(objectLiteral);
 				break;
 			case '[':
 				String arrayLiteral = getArrayIntheArray(arrayTobeAdded.substring(i));
 				i = i +  arrayLiteral.length();
 				System.out.println(arrayLiteral);
 				jArray.getArrayList().add(new JsonArray()); //do manipulation later
+				arrayList.add(arrayLiteral);
 				break;
 			default:
 				break;
 				
 			}
 			i++;
+		}
+		
+		for (String temp : objectList)
+		{
+			arrayTobeAdded = arrayTobeAdded.replace(temp, "");
+		}
+		
+		for (String temp : arrayList)
+		{
+			arrayTobeAdded = arrayTobeAdded.replace(temp, "");
+		}
+		
+		System.out.println(arrayTobeAdded);
+		String[] values = arrayTobeAdded.split(",");
+		for (String tempValues : values)
+		{
+			if(tempValues.contains("true"))
+			{
+				jArray.getBoolList().add(true);
+			}
+			else if (tempValues.contains("false"))
+			{
+				jArray.getBoolList().add(false);
+			}
+			else
+			{
+				try
+				{
+					Long var = Long.parseLong(tempValues);
+					jArray.getLongList().add(var);
+				}
+				catch ( NumberFormatException ne)
+				{
+					Double dVar = Double.parseDouble(tempValues);
+					jArray.getDoubleList().add(dVar);
+				}
+			}
 		}
 		return restObject;
 	}
