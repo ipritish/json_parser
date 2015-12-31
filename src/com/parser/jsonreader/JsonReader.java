@@ -467,11 +467,69 @@ public class JsonReader {
 	private static void addObjectToArray(JsonArray jArray, JsonObject jObject, String objectLiteral)
 	{
 		jArray.getObjectList().add(jObject);
-	}
-	
-	private static void addStringToObject(JsonObject jObject, String key, String value)
-	{
-		
+		objectLiteral = objectLiteral.substring(1,objectLiteral.lastIndexOf('}'));
+		char val[] = objectLiteral.toCharArray();
+		JsonObject jinnerObject = new JsonObject();
+		for (int i=0 ; i<val.length;)
+		{	
+			switch(val[i])
+			{
+				case '{':
+					
+					String restJObject = objectLiteral.substring(i);
+					String innerkey = objectLiteral.substring(0,objectLiteral.indexOf(restJObject));
+					//System.out.println(restObject);
+					innerkey = innerkey.substring(innerkey.lastIndexOf(',')+1);
+					innerkey = innerkey.replaceAll("[//:]", "").replace("\"","").trim();
+					String tempRemain = addMapJsonObjectIterator(jinnerObject,innerkey,restJObject);
+					i = objectLiteral.length() - tempRemain.length();
+					break;
+				case '"':
+					String restString = objectLiteral.substring(i);
+					if(stringObject(restString))
+					{
+						if (restString.contains(","))
+						{
+							String mapString = restString.substring(0,restString.indexOf(','));
+							String[] tempArray = mapString.split(":");
+							String keyString = tempArray[0];
+							keyString = keyString.replaceAll("[//:]", "").replace("\"","").trim();
+							String valString = tempArray[1];
+							valString = valString.replaceAll("[//:]", "").replace("\"","").trim();
+							addMapStringToObject(jObject, keyString, valString);
+							i = i + mapString.length();
+						}
+						else if(restString.contains(":"))
+						{
+							String[] tempArray = restString.split(":");
+							String keyString = tempArray[0];
+							keyString = keyString.replaceAll("[//:]", "").replace("\"","").trim();
+							String valString = tempArray[1];
+							valString = valString.replaceAll("[//:]", "").replace("\"","").trim();
+							addMapStringToObject(jObject, keyString, valString);
+							i = i + restString.length();
+						}
+					}
+					break;
+				case '}':
+					break;
+				case '[':
+					String arrObject = objectLiteral.substring(i);
+					String arrkey = objectLiteral.substring(0,objectLiteral.indexOf(arrObject));
+					arrkey = arrkey.substring(arrkey.lastIndexOf(',')+1).trim();
+					arrkey = arrkey.replaceAll("[//:]", "").replace("\"","").trim();
+					String temparrRemain = addMapArrayToObject(jinnerObject,arrkey,arrObject);
+					i = objectLiteral.length() - temparrRemain.length();
+					break;
+				case ']':
+					break;
+				case ':':
+					break;
+				
+			}
+			System.out.println(i);
+			i++;
+		}
 	}
 	
 

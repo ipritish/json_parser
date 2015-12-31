@@ -1,1 +1,1 @@
-{"hello":"hello","keypar":"parse","first":"trial","arraytest":[1,{},[]],"second":{"insidefirst":"insidesecondval","testsecond":[]},"third":{"insidesecond2":"insidesecond2val","example":"easy","insideinsidefirst1":{"test2":"test2"}}}
+{"hello":"hello","keypar":"parse","first":"trial","arraytest":[1,{"test1":"testval"},[]],"second":{"insidefirst":"insidesecondval","testsecond":[]},"third":{"insidesecond2":"insidesecond2val","example":"easy","insideinsidefirst1":{"test2":"test2"}}}
