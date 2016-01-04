@@ -441,15 +441,15 @@ public class JsonReader {
 		String[] values = arrayLiteral.split(",");
 		for (String tempValues : values)
 		{
-			if(tempValues.contains("true"))
+			if(tempValues.contains("true") && !(tempValues.equals("")))
 			{
 				jinnerArray.getBoolList().add(true);
 			}
-			else if (tempValues.contains("false"))
+			else if (tempValues.contains("false") && !(tempValues.equals("")))
 			{
 				jinnerArray.getBoolList().add(false);
 			}
-			else
+			else if (!(tempValues.equals("")))
 			{
 				try
 				{
