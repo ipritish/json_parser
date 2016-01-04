@@ -4,7 +4,7 @@
 	"arraytest": [1, {
 			"test1": "testval"
 		},
-		[]
+		[1,true,{"test":"test"}]
 	],
 	"second": {
 		"insidefirst": "insidesecondval",

@@ -342,7 +342,7 @@ public class JsonReader {
 				String arrayLiteral = getArrayIntheArray(arrayTobeAdded.substring(i));
 				i = i +  arrayLiteral.length();
 				System.out.println(arrayLiteral);
-				jArray.getArrayList().add(new JsonArray()); //do manipulation later
+				addMapArrayIterator(jArray,arrayLiteral);
 				arrayList.add(arrayLiteral);
 				break;
 			default:
@@ -389,6 +389,82 @@ public class JsonReader {
 			}
 		}
 		return restObject;
+	}
+	
+	private static boolean addMapArrayIterator(JsonArray jArray, String arrayLiteral)
+	{
+		boolean retVal = true;
+		ArrayList<String> arrayList = new ArrayList<String>();
+		ArrayList<String> objectList = new ArrayList<String>();
+		JsonArray jinnerArray = new JsonArray();
+		jArray.getArrayList().add(jinnerArray);
+		arrayLiteral = arrayLiteral.substring(1,arrayLiteral.lastIndexOf(']'));
+		System.out.println(arrayLiteral);
+		char[] arrIterator = arrayLiteral.toCharArray();
+		//remove only array and object from string
+		for (int i=0 ; i<arrIterator.length;)
+		{
+			switch(arrIterator[i])
+			{
+			case '{':
+				String objectLiteral = getObjectIntheArray(arrayLiteral.substring(i));
+				i = i + objectLiteral.length();
+				addObjectToArray(jinnerArray,new JsonObject(), objectLiteral);
+				System.out.println(objectLiteral);
+				objectList.add(objectLiteral);
+				break;
+			case '[':
+				String insidearrayLiteral = getArrayIntheArray(arrayLiteral.substring(i));
+				i = i +  insidearrayLiteral.length();
+				System.out.println(insidearrayLiteral);
+				addMapArrayIterator(jinnerArray,insidearrayLiteral); //do manipulation later
+				arrayList.add(insidearrayLiteral);
+				break;
+			default:
+				break;
+				
+			}
+			i++;
+		}
+		
+		for (String temp : objectList)
+		{
+			arrayLiteral = arrayLiteral.replace(temp, "");
+		}
+		
+		for (String temp : arrayList)
+		{
+			arrayLiteral = arrayLiteral.replace(temp, "");
+		}
+		
+		System.out.println(arrayLiteral);
+		String[] values = arrayLiteral.split(",");
+		for (String tempValues : values)
+		{
+			if(tempValues.contains("true"))
+			{
+				jinnerArray.getBoolList().add(true);
+			}
+			else if (tempValues.contains("false"))
+			{
+				jinnerArray.getBoolList().add(false);
+			}
+			else
+			{
+				try
+				{
+					Long var = Long.parseLong(tempValues);
+					jinnerArray.getLongList().add(var);
+				}
+				catch ( NumberFormatException ne)
+				{
+					Double dVar = Double.parseDouble(tempValues);
+					jinnerArray.getDoubleList().add(dVar);
+				}
+			}
+		}
+		
+		return retVal;
 	}
 	
 	private static String getObjectIntheArray(String substring) 
@@ -458,7 +534,7 @@ public class JsonReader {
 		return restObject;
 	}
 	
-	//these will be inner iterators
+	//these will be inner iterators TODO this function
 	private static void addArrayToObject(JsonObject jObject, JsonArray jArray, String key)
 	{
 		jObject.getMapArray().put(key, jArray);
