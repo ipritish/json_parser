@@ -604,12 +604,6 @@ public class JsonReader {
 		return restObject;
 	}
 	
-	//these will be inner iterators TODO this function
-	private static void addArrayToObject(JsonObject jObject, JsonArray jArray, String key)
-	{
-		jObject.getMapArray().put(key, jArray);
-	}
-	
 	private static void addObjectToArray(JsonArray jArray, JsonObject jObject, String objectLiteral)
 	{
 		jArray.getObjectList().add(jObject);
